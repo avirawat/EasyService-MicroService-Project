@@ -1,0 +1,39 @@
+package com.easyservice.model;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+public class Workers {
+
+	@Id
+	@GeneratedValue(generator = "worker_gen", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "worker_gen", sequenceName = "worker_seq", initialValue = 300, allocationSize = 1)
+
+	private Integer wokerId;
+	@Column(length = 20)
+	private String workerName;
+	@Column(length = 20)
+	private String workerStatus;
+	private Integer contactNum;
+	private String workType;
+	private Integer taskId;
+}

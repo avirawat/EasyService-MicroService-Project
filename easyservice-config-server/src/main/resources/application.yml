@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/avirawat/micro-configuration-repo.git
+          
+server:  port: 8888
+  

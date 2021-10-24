@@ -1,0 +1,73 @@
+package com.easyservice.model;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+public class Contractor {
+	
+	@Id
+	@GeneratedValue(generator="contractor_gen",strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="contractor_gen",sequenceName = "contractor_seq",initialValue = 1,allocationSize = 1)
+	private Integer contractId;
+	@Column(length = 20)
+	private String contractName;
+	@Column(length = 20)
+	private String contractorName;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "contractor_id")
+	Set<Maintenance> projectList;
+
+	public Contractor(String contractName, String contractorName, LocalDate startDate, LocalDate endDate,
+			Set<Maintenance> projectList) {
+		super();
+		this.contractName = contractName;
+		this.contractorName = contractorName;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.projectList = projectList;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Contractor [contractName=");
+		builder.append(contractName);
+		builder.append(", contractorName=");
+		builder.append(contractorName);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
+}

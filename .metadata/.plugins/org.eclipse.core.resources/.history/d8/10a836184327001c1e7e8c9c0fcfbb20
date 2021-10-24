@@ -1,0 +1,90 @@
+package com.easyservice.model;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+public class Task {
+	
+	@Id
+	@GeneratedValue(generator = "task_gen",strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="task_gen",sequenceName = "task_seq",initialValue = 200,allocationSize = 1)
+	private Integer taskId;
+	@Column(length = 20)
+	private String taskName;
+	@Column(length = 20)
+	private String organiser;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private Integer duration;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(length = 8)
+	private Status status;
+	
+	@ManyToOne
+	@JoinColumn(name="project_id")
+	Maintenance maintenance;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "task_id")
+	Set<Worker> workerList;
+
+	public Task(String taskName, String organiser, LocalDate startDate, LocalDate endDate, Integer duration,
+			Status status) {
+		super();
+		this.taskName = taskName;
+		this.organiser = organiser;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.duration = duration;
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Task [taskName=");
+		builder.append(taskName);
+		builder.append(", organiser=");
+		builder.append(organiser);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", duration=");
+		builder.append(duration);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+}

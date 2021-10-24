@@ -1,0 +1,40 @@
+package com.easyservice;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+class Maintainence {
+	
+	@Id
+	@GeneratedValue(generator="maintain_gen",strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="maintain_gen",sequenceName = "maintainence_seq",initialValue = 100,allocationSize = 1)
+	private Integer projectId;
+	private String projectName;
+	private String projectManager;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private enum status{
+		DEFINED,INPROGRESS,COMPLETED,ONHOLD;
+	}
+	private enum priority{
+		HIGH,LOW,MIDDLE;
+	}
+	private Integer contractId;
+}

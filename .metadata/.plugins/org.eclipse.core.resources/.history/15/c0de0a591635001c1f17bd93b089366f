@@ -1,0 +1,21 @@
+package com.easyservice.exception;
+
+public class TAskNotFoundException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public TAskNotFoundException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public TAskNotFoundException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+	
+
+}

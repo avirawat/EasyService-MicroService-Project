@@ -1,0 +1,96 @@
+package com.easyservice.model;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+public class Maintenance {
+	
+
+
+	@Id
+	@GeneratedValue(generator="maintain_gen",strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="maintain_gen",sequenceName = "maintainence_seq",initialValue = 100,allocationSize = 1)
+	private Integer projectId;
+	@Column(length = 20)
+	private String projectName;
+	@Column(length = 20)
+	private String projectManager;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(length = 8)
+	private Status status;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(length = 8)
+	private Priority priority;
+	
+	@ManyToOne
+	@JoinColumn(name="contractor_id")
+	Contractor contractor;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "project_id")
+	Set<Task> taskList;
+
+	public Maintenance(String projectName, String projectManager, LocalDate startDate, LocalDate endDate, Status status,
+			Priority priority) {
+		super();
+		this.projectName = projectName;
+		this.projectManager = projectManager;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.status = status;
+		this.priority = priority;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Maintenance [projectName=");
+		builder.append(projectName);
+		builder.append(", projectManager=");
+		builder.append(projectManager);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", priority=");
+		builder.append(priority);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	
+	
+}
+
